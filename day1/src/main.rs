@@ -1,4 +1,5 @@
 use std::fs;
+use std::collections::HashMap;
 
 fn main() {
 
@@ -22,12 +23,28 @@ fn main() {
     //println!("List 1: {:?}", &list1[..10]);
     //println!("List 2: {:?}", list2);
 
+    // PART 1 SOLUTION
     let result: Vec<i32> = list1.iter().zip(list2.iter())
         .map(|(a, b)| (a - b).abs())
         .collect();
 
     let sum: i32 = result.iter().sum();
 
-    println!("The sum is: {}", sum);
+    println!("The answer for part 1 is: {}", sum);
+
+    // PART 2 SOLUTION
+    let mut count_map = HashMap::new();
+    for &elem in &list2 {
+        *count_map.entry(elem).or_insert(0) += 1;
+    }
+
+    let mut sim_sum: i32 = 0;
+
+    for &elem in &list1 {
+        let count = count_map.get(&elem).unwrap_or(&0);
+        sim_sum += elem * count;
+        //println!("Element {} appears {} times in list2", elem, count);
+    }
+    println!("The answer for part 2 is: {}", sim_sum);
 
 }
