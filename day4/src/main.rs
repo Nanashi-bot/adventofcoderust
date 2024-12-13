@@ -19,27 +19,45 @@ fn main() {
     }
 
     let mut sum: i32 = 0;
-    let word: Vec<char> = "XMAS".chars().collect();
+//    let word: Vec<char> = "XMAS".chars().collect();
 
 //    for row in &grid {
 //        println!("{:?}", row);
 //    }
 
-    let directions = [
-        (-1,0),(-1,1),(-1,-1),(1,0),(1,1),(1,-1),(0,0),(0,1),(0,-1)
-    ];
+//    let directions = [
+//        (-1,0),(-1,1),(-1,-1),(1,0),(1,1),(1,-1),(0,0),(0,1),(0,-1)
+//    ];
+//
+//    for i in 0..grid.len(){
+//        for j in 0..grid[i].len(){
+//            for (dx,dy) in &directions {
+//                if word_search(&grid, i, j, &word, *dx, *dy) {
+//                    println!("Found starting at ({}, {}) in direction ({}, {})", i, j, dx,dy);
+//                    sum += 1;
+//                }
+//            }
+//        }
+//    }
+//    println!("Total times found: {}", sum);
 
-    for i in 0..grid.len(){
-        for j in 0..grid[i].len(){
-            for (dx,dy) in &directions {
-                if word_search(&grid, i, j, &word, *dx, *dy) {
-                    println!("Found starting at ({}, {}) in direction ({}, {})", i, j, dx,dy);
+    // PART 2
+    for i in 1..grid.len()-1 {
+        for j in 1..grid[i].len()-1 {
+            let mut c: i32 = 0;
+            if grid[i][j] == 'A'{
+                if grid[i-1][j+1] == 'M' && grid[i+1][j-1] == 'S' { c2 += 1; }
+                if grid[i+1][j+1] == 'M' && grid[i-1][j-1] == 'S' { c2 += 1; }
+                if grid[i+1][j-1] == 'M' && grid[i-1][j+1] == 'S' { c2 += 1; }
+                if grid[i-1][j-1] == 'M' && grid[i+1][j+1] == 'S' { c2 += 1; }
+                if c > 1{
+                    println!("A found at ({}, {})", i, j);
                     sum += 1;
                 }
             }
         }
     }
-    println!("Total times found: {}", sum);
+    println!("{}", sum);
 }
 
 fn word_search(grid: &Vec<Vec<char>>, x: usize, y:usize, word: &Vec<char<>>, dx: isize, dy: isize) -> bool {
